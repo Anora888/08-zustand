@@ -9,7 +9,6 @@ import { fetchNotes } from "@/lib/api";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import NoteList from "@/components/NoteList/NoteList";
 import Pagination from "@/components/Pagination/Pagination";
-import Loading from '@/app/notes/filter/[...slug]/loading'
 import type { NoteTag } from "@/types/note";
 
 interface NotesPageClientProps {

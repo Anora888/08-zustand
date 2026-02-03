@@ -6,6 +6,7 @@ import { useDebounce } from "use-debounce";
 
 import { fetchNotes } from "@/lib/api";
 import type { Note } from "@/types/note";
+import { TAGS } from "@/types/note";
 
 import SearchBox from "@/components/SearchBox/SearchBox";
 import Pagination from "@/components/Pagination/Pagination";
@@ -68,36 +69,33 @@ export default function NotesClient({ searchQuery }: NotesClientProps) {
       <div>
         <SearchBox value={search} onChange={handleSearchChange} />
 
-{data.totalPages > 1 && (
-        <Pagination
-          page={page}
-          totalPages={data.totalPages}
-          onPageChange={handlePageChange}
-        />
-      )}
+        {data.totalPages > 1 && (
+          <Pagination
+            page={page}
+            totalPages={data.totalPages}
+            onPageChange={handlePageChange}
+          />
+        )}
 
         <button type="button" onClick={openModal}>
           Add note
         </button>
       </div>
 
-      
-
       <NoteList notes={data.notes} />
 
-      
-
-{isModalOpen && (
-  <Modal onClose={closeModal}>
-    <NoteForm
-      onCancel={closeModal}
-      onCreated={() => {
-        setPage(1);
-        closeModal();
-      }}
-    />
-  </Modal>
-)}
+      {isModalOpen && (
+        <Modal onClose={closeModal}>
+          <NoteForm
+            categories={TAGS}
+            onCancel={closeModal}
+            onCreated={() => {
+              setPage(1);
+              closeModal();
+            }}
+          />
+        </Modal>
+      )}
     </div>
   );
 }
