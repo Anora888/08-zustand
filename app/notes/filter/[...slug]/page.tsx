@@ -1,0 +1,34 @@
+import { notFound } from "next/navigation";
+import NotesPageClient from "./Notes.client";
+import type { NoteTag } from "@/types/note";
+import { TAGS } from "@/types/note";
+
+
+interface NotesByCategoryParams {
+  slug: string[];
+}
+
+const NotesByCategory = async ({
+  params,
+}: {
+  params: Promise<NotesByCategoryParams>;
+}) => {
+  const { slug } = await params;
+  const filter = slug[0];
+
+  function isNoteTag(value: string): value is NoteTag {
+    return TAGS.includes(value as NoteTag);
+  }
+
+  if (filter === "all") {
+    return <NotesPageClient />;
+  }
+
+  if (isNoteTag(filter)) {
+    return <NotesPageClient tag={filter} />;
+  }
+
+  notFound();
+};
+
+export default NotesByCategory;
